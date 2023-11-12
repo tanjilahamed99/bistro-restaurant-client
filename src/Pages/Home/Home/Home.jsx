@@ -1,3 +1,4 @@
+import Contact from "../Contact/Contact";
 import HomeBanner from "../HomeBanner/HomeBanner";
 import HomeParallax from "../HomeParallax/HomeParallax";
 import OrderOnline from "../OrderOnline/OrderOnline";
@@ -11,6 +12,7 @@ const Home = () => {
             <OrderOnline></OrderOnline>
             <HomeParallax></HomeParallax>
             <Menu></Menu>
+            <Contact></Contact>
         </div>
     );
 };
