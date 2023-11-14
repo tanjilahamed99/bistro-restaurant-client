@@ -18,7 +18,8 @@ const useMenusData = () => {
     const dessert = menus?.filter(item => item.category === 'dessert')
     const soup = menus?.filter(item => item.category === 'soup')
     const salad = menus?.filter(item => item.category === 'salad')
-    return [offered, pizza, salad, dessert, soup]
+    const drinks = menus?.filter(item => item.category === 'drinks')
+    return [offered, pizza, salad, dessert, soup,drinks]
 };
 
 export default useMenusData;
