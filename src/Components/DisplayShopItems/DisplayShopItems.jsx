@@ -1,7 +1,12 @@
 import PropTypes from 'prop-types';
 
 const DisplayShopItems = ({ data }) => {
-    const { image, recipe, price,name } = data
+    const { image, recipe, price, name,_id } = data
+
+    const handleAddToCart = () => {
+         console.log(_id,name)
+    }
+
     return (
         <div className="card bg-base-100 shadow-xl relative">
             <figure><img src={image} alt="Shoes" /></figure>
@@ -10,7 +15,7 @@ const DisplayShopItems = ({ data }) => {
                 <h2 className="card-title">{name}</h2>
                 <p>{recipe}</p>
                 <div className="card-actions justify-center">
-                <button className="btn  flex mx-auto border-l-0 text-[#BB8506] border-[#BB8506] border-r-0 border-t-0 border-b-4">Add To Cart</button>
+                    <button onClick={handleAddToCart} className="btn  flex mx-auto border-l-0 text-[#BB8506] border-[#BB8506] border-r-0 border-t-0 border-b-4">Add To Cart</button>
                 </div>
             </div>
         </div>

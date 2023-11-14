@@ -1,23 +1,38 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import loginImg from '../../assets/others/authentication2.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form"
+import Swal from 'sweetalert2';
 
 
 const SignUp = () => {
 
     const { createUser } = useContext(AuthContext)
 
-    const { register, handleSubmit, formState: { errors }, } = useForm()
+    const navigate = useNavigate()
+
+    const { register, handleSubmit, } = useForm()
     const onSubmit = (data) => {
 
         createUser(data.email, data.password)
-            .then(res => {
-                console.log(res.user)
+            .then(() => {
+                Swal.fire({
+                    position: "top-center",
+                    icon: "success",
+                    title: "Your work has been saved",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                navigate('/')
             })
             .catch(error => {
-                console.error(error)
+                Swal.fire({
+                    title: 'Error!',
+                    text: error.message,
+                    icon: 'error',
+                    confirmButtonText: 'Cool'
+                  })
             })
 
     }

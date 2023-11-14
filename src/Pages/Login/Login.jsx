@@ -1,32 +1,62 @@
 import loginImg from '../../assets/others/authentication2.png'
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { useForm } from "react-hook-form"
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 
 const Login = () => {
-
+    const navigate = useNavigate()
     const { loginUser } = useContext(AuthContext)
+    const [disable, setDisable] = useState(true)
 
-    const { register, handleSubmit, formState: { errors }, } = useForm()
+    useEffect(() => {
+        loadCaptchaEnginge(6)
+    }, [])
+
+
+    const { register, handleSubmit } = useForm()
     const onSubmit = (data) => {
-        
-        loginUser(data.email,data.password)
-        .then(result=>{
-            console.log(result.user)
-        })
-        .catch(error=>{
-            console.error(error)
-        })
+
+        loginUser(data.email, data.password)
+            .then(() => {
+                Swal.fire({
+                    position: "top-center",
+                    icon: "success",
+                    title: "Your work has been saved",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                navigate('/')
+            })
+            .catch(error => {
+                Swal.fire({
+                    title: 'Error!',
+                    text: error.message,
+                    icon: 'error',
+                    confirmButtonText: 'Cool'
+                })
+            })
 
     }
 
-    // loadCaptchaEnginge(6)
+    const validCaptcha = (e) => {
+        const user_captcha_value = e.target.value;
+
+        if (validateCaptcha(user_captcha_value) == true) {
+            setDisable(false)
+        }
+
+        else {
+            setDisable(true)
+        }
+    };
+
 
     return (
-        <div className="hero min-h-screen bg-base-200">
+        <div className="hero min-h-screen bg-base-200 py-20">
             <div className="hero-content flex-col gap-20 lg:flex-row">
                 <div className="text-center lg:text-left w-1/2">
                     <img src={loginImg} alt="" />
@@ -50,9 +80,12 @@ const Login = () => {
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
                             </div>
-                            {/* <LoadCanvasTemplate /> */}
+                            <div className="form-control">
+                                <LoadCanvasTemplate />
+                                <input onBlur={validCaptcha} type="text" placeholder="captcha" className="input input-bordered" required />
+                            </div>
                             <div className="form-control mt-6">
-                                <button className="btn btn-primary">Login</button>
+                                <button disabled={disable} className="btn btn-primary">Login</button>
                             </div>
                             <p>New here <Link className='text-bold' to={'/signUp'}>Create Account</Link></p>
                         </form>

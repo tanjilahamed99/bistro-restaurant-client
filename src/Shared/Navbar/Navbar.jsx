@@ -1,6 +1,11 @@
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { FaShoppingCart } from "react-icons/fa";
 
 const Navbar = () => {
+
+    const { user } = useContext(AuthContext)
 
     const ulLink = <>
         <li>
@@ -54,7 +59,22 @@ const Navbar = () => {
             </NavLink>
         </li>
         <li>
-            <Link to={'/login'}><button>login</button></Link>
+            <NavLink
+                to="/shop"
+                className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "text-[#EEFF25]" : ""
+                }
+            >
+                <button className="btn btn-sm">
+                   <FaShoppingCart></FaShoppingCart>
+                    <div className="badge badge-secondary">+0</div>
+                </button>
+            </NavLink>
+        </li>
+        <li>
+            {
+                user ? <button className="">Logout</button> : <Link to={'/login'}><button>login</button></Link>
+            }
         </li>
     </>
 
