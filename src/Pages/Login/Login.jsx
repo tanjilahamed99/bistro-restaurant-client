@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+// import { FaGoogle } from 'react-icons/fa';
 
 
 const Login = () => {
@@ -55,6 +56,14 @@ const Login = () => {
     };
 
 
+    // const handleGoogleLogin = () => {
+
+    //     googleLogin()
+    //         .then(res => { console.log(res) })
+    //         .catch(error => console.log(error.message))
+
+    // }
+
     return (
         <div className="hero min-h-screen bg-base-200 py-20">
             <div className="hero-content flex-col gap-20 lg:flex-row">
@@ -90,6 +99,10 @@ const Login = () => {
                             <p>New here <Link className='text-bold' to={'/signUp'}>Create Account</Link></p>
                         </form>
                     </div>
+                    {/* <button onClick={handleGoogleLogin} className="btn">
+                        <FaGoogle></FaGoogle>
+                        Button
+                    </button> */}
                 </div>
             </div>
         </div>

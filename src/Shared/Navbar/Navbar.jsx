@@ -2,10 +2,19 @@ import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { FaShoppingCart } from "react-icons/fa";
+import UseCarts from "../../Hooks/UseCarts/UseCarts";
 
 const Navbar = () => {
 
-    const { user } = useContext(AuthContext)
+    const { user, logout } = useContext(AuthContext)
+
+    const [cart] = UseCarts()
+
+    const handleLogOut = () => {
+        logout()
+            .then(() => { })
+            .catch(error => console.log(error))
+    }
 
     const ulLink = <>
         <li>
@@ -60,20 +69,20 @@ const Navbar = () => {
         </li>
         <li>
             <NavLink
-                to="/shop"
+                to="/dashboard/carts"
                 className={({ isActive, isPending }) =>
                     isPending ? "pending" : isActive ? "text-[#EEFF25]" : ""
                 }
             >
                 <button className="btn btn-sm">
-                   <FaShoppingCart></FaShoppingCart>
-                    <div className="badge badge-secondary">+0</div>
+                    <FaShoppingCart></FaShoppingCart>
+                    <div className="badge badge-secondary">+{cart?.length}</div>
                 </button>
             </NavLink>
         </li>
         <li>
             {
-                user ? <button className="">Logout</button> : <Link to={'/login'}><button>login</button></Link>
+                user ? <button onClick={handleLogOut} className="btn-outline text-white btn btn-sm">Logout</button> : <Link to={'/login'}><button>login</button></Link>
             }
         </li>
     </>
@@ -85,7 +94,7 @@ const Navbar = () => {
                     <label tabIndex={0} className="btn btn-ghost lg:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                     </label>
-                    <ul tabIndex={0} className="menu menu-sm text-white dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                    <ul tabIndex={0} className="menu menu-sm items-center text-white dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                         {
                             ulLink
                         }
@@ -96,7 +105,7 @@ const Navbar = () => {
                     <h2 className="font-medium uppercase text-sm">Restaurant</h2>
                 </div>
             </div>
-            <div className="navbar-center hidden lg:flex">
+            <div className="navbar-center hidden lg:flex items-center">
                 <ul className="menu menu-horizontal px-1 font-semibold text-white">
                     {
                         ulLink

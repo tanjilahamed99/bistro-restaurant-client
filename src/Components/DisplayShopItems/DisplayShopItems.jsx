@@ -1,10 +1,38 @@
 import PropTypes from 'prop-types';
+import UseAxios from '../../Hooks/Axios/UseAxios';
+import Swal from 'sweetalert2';
+import UseCarts from '../../Hooks/UseCarts/UseCarts';
+import { useContext } from 'react';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
 
 const DisplayShopItems = ({ data }) => {
-    const { image, recipe, price, name,_id } = data
+    const { image, recipe, price, name, _id } = data
+    const { user } = useContext(AuthContext)
+
+    const axiosSecure = UseAxios()
+    const [, refetch] = UseCarts()
 
     const handleAddToCart = () => {
-         console.log(_id,name)
+
+
+        const cartData = {
+            image, recipe, price, name, id: _id, email: user.email
+        }
+
+        axiosSecure.post('/carts', cartData)
+            .then(res => {
+                if (res.data.acknowledged) {
+                    Swal.fire({
+                        position: "top-center",
+                        icon: "success",
+                        title: "Your product  has been saved in cart",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    refetch()
+                }
+            })
+
     }
 
     return (

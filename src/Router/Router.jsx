@@ -5,6 +5,8 @@ import Menu from "../Pages/Menu/Menu/Menu";
 import OurShop from "../Pages/OurShop/OurShop";
 import SignUp from "../Pages/SignUp/SignUp";
 import Login from "../Pages/Login/Login";
+import Dashboard from "../Pages/Dashboard/Dashboard/Dashboard";
+import Carts from "../Pages/Dashboard/Carts/Carts";
 
 const Router = createBrowserRouter([
     {
@@ -13,24 +15,34 @@ const Router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element:<Home></Home>
+                element: <Home></Home>
             },
             {
                 path: '/shop',
-                element:<OurShop></OurShop>
+                element: <OurShop></OurShop>
             },
             {
                 path: '/menu',
-                element:<Menu></Menu>
+                element: <Menu></Menu>
             },
             {
                 path: '/signUp',
-                element:<SignUp></SignUp>
+                element: <SignUp></SignUp>
             },
             {
                 path: '/login',
-                element:<Login></Login>
+                element: <Login></Login>
             },
+        ]
+    },
+    {
+        path: '/dashboard',
+        element: <Dashboard></Dashboard>,
+        children: [
+            {
+                path: '/dashboard/carts',
+                element: <Carts></Carts>
+            }
         ]
     }
 ])
