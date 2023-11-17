@@ -21,7 +21,6 @@ const Login = () => {
 
     const { register, handleSubmit } = useForm()
     const onSubmit = (data) => {
-
         loginUser(data.email, data.password)
             .then(() => {
                 Swal.fire({
@@ -62,22 +61,30 @@ const Login = () => {
 
         googleLogin()
             .then((res) => {
-
-                console.log(res)
                 const userInfo = {
                     email: res.user?.email,
                     name: res.user?.displayName
                 }
-
-                console.log(userInfo)
-
                 publicAxios.post('/users', userInfo)
-
-
-
-                // navigate('/')
+                    .then(() => {
+                        Swal.fire({
+                            position: "top-center",
+                            icon: "success",
+                            title: "Your work has been saved",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        navigate('/')
+                    })
             })
-            .catch(error => console.log(error.message))
+            .catch(error => {
+                Swal.fire({
+                    title: 'Error!',
+                    text: error.message,
+                    icon: 'error',
+                    confirmButtonText: 'Cool'
+                })
+            })
 
     }
 

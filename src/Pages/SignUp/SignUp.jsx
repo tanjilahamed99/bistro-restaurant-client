@@ -5,11 +5,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form"
 import Swal from 'sweetalert2';
 import UsePublicAxios from '../../Hooks/PublicAxios/UsePublicAxios';
+import { FaGoogle } from 'react-icons/fa';
 
 
 const SignUp = () => {
 
-    const { createUser } = useContext(AuthContext)
+    const { createUser,googleLogin } = useContext(AuthContext)
 
     const publicAxios = UsePublicAxios()
 
@@ -35,6 +36,39 @@ const SignUp = () => {
                             });
                             navigate('/')
                         }
+                    })
+            })
+            .catch(error => {
+                Swal.fire({
+                    title: 'Error!',
+                    text: error.message,
+                    icon: 'error',
+                    confirmButtonText: 'Cool'
+                })
+            })
+
+    }
+
+
+    const handleGoogleLogin = () => {
+        const publicAxios = UsePublicAxios()
+
+        googleLogin()
+            .then((res) => {
+                const userInfo = {
+                    email: res.user?.email,
+                    name: res.user?.displayName
+                }
+                publicAxios.post('/users', userInfo)
+                    .then(() => {
+                        Swal.fire({
+                            position: "top-center",
+                            icon: "success",
+                            title: "Your work has been saved",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        navigate('/')
                     })
             })
             .catch(error => {
@@ -84,6 +118,10 @@ const SignUp = () => {
                             <p>Already have a account <Link className='text-bold' to={'/login'}>Login</Link></p>
                         </form>
                     </div>
+                    <button onClick={handleGoogleLogin} className="btn bg-blue-500 flex mx-auto w-[90%] my-5 text-white">
+                        <FaGoogle></FaGoogle>
+                        Google
+                    </button>
                 </div>
             </div>
         </div>
