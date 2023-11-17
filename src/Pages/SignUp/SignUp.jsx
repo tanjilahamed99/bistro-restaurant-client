@@ -4,11 +4,14 @@ import loginImg from '../../assets/others/authentication2.png'
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form"
 import Swal from 'sweetalert2';
+import UsePublicAxios from '../../Hooks/PublicAxios/UsePublicAxios';
 
 
 const SignUp = () => {
 
     const { createUser } = useContext(AuthContext)
+
+    const publicAxios = UsePublicAxios()
 
     const navigate = useNavigate()
 
@@ -17,14 +20,22 @@ const SignUp = () => {
 
         createUser(data.email, data.password)
             .then(() => {
-                Swal.fire({
-                    position: "top-center",
-                    icon: "success",
-                    title: "Your work has been saved",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                navigate('/')
+
+                const userInfo = { email: data.email, name: data.name }
+
+                publicAxios.post('/users', userInfo)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            Swal.fire({
+                                position: "top-center",
+                                icon: "success",
+                                title: "Your work has been saved",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            navigate('/')
+                        }
+                    })
             })
             .catch(error => {
                 Swal.fire({
@@ -32,7 +43,7 @@ const SignUp = () => {
                     text: error.message,
                     icon: 'error',
                     confirmButtonText: 'Cool'
-                  })
+                })
             })
 
     }

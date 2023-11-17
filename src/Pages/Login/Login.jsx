@@ -5,12 +5,13 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-// import { FaGoogle } from 'react-icons/fa';
+import { FaGoogle } from 'react-icons/fa';
+import UsePublicAxios from '../../Hooks/PublicAxios/UsePublicAxios';
 
 
 const Login = () => {
     const navigate = useNavigate()
-    const { loginUser } = useContext(AuthContext)
+    const { loginUser, googleLogin } = useContext(AuthContext)
     const [disable, setDisable] = useState(true)
 
     useEffect(() => {
@@ -56,13 +57,29 @@ const Login = () => {
     };
 
 
-    // const handleGoogleLogin = () => {
+    const handleGoogleLogin = () => {
+        const publicAxios = UsePublicAxios()
 
-    //     googleLogin()
-    //         .then(res => { console.log(res) })
-    //         .catch(error => console.log(error.message))
+        googleLogin()
+            .then((res) => {
 
-    // }
+                console.log(res)
+                const userInfo = {
+                    email: res.user?.email,
+                    name: res.user?.displayName
+                }
+
+                console.log(userInfo)
+
+                publicAxios.post('/users', userInfo)
+
+
+
+                // navigate('/')
+            })
+            .catch(error => console.log(error.message))
+
+    }
 
     return (
         <div className="hero min-h-screen bg-base-200 py-20">
@@ -99,10 +116,10 @@ const Login = () => {
                             <p>New here <Link className='text-bold' to={'/signUp'}>Create Account</Link></p>
                         </form>
                     </div>
-                    {/* <button onClick={handleGoogleLogin} className="btn">
+                    <button onClick={handleGoogleLogin} className="btn bg-blue-500 flex mx-auto w-[90%] my-5 text-white">
                         <FaGoogle></FaGoogle>
-                        Button
-                    </button> */}
+                        Google
+                    </button>
                 </div>
             </div>
         </div>
