@@ -28,7 +28,6 @@ const SignUp = () => {
                     .then(res => {
                         if (res.data.insertedId) {
                             Swal.fire({
-                                position: "top-center",
                                 icon: "success",
                                 title: "Your work has been saved",
                                 showConfirmButton: false,

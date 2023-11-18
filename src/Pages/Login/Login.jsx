@@ -24,7 +24,6 @@ const Login = () => {
         loginUser(data.email, data.password)
             .then(() => {
                 Swal.fire({
-                    position: "top-center",
                     icon: "success",
                     title: "Your work has been saved",
                     showConfirmButton: false,

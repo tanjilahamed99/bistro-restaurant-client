@@ -9,7 +9,7 @@ const Dashboard = () => {
 
     return (
         <div className="flex  gap-10 justify-center mx-auto container">
-            <div className="w-[20%] list-none bg-[#D1A054] h-[100vh]">
+            <div className="w-[20%] list-none bg-[#D1A054] min-h-screen">
                 <div className="my-10 space-y-2 text-center">
                     <h2 className="font-semibold text-2xl">BISTRO BOSS</h2>
                     <h2 className="font-semibold">Restaurant</h2>
@@ -142,6 +142,7 @@ const Dashboard = () => {
                             </li></>
                     }
                     <hr className="w-[90%] " />
+                    
                     <div className="space-y-5">
                         <li>
                             <NavLink
