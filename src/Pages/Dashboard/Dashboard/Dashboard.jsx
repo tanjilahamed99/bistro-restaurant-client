@@ -1,10 +1,12 @@
 import { FaBars, FaBook, FaCalendar, FaCoffee, FaHome, FaPeopleArrows, FaPhone, FaShopify, FaShoppingCart, FaWallet } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
+import UseAdmin from "../../../Hooks/useAdmin/UseAdmin";
 
 
 const Dashboard = () => {
 
-    const admin = true
+    const [isAdmin] = UseAdmin()
+    console.log(isAdmin)
 
     return (
         <div className="flex  gap-10 justify-center mx-auto container">
@@ -16,7 +18,7 @@ const Dashboard = () => {
 
                 <ul className="space-y-5 pl-10">
                     {
-                        admin ? <>
+                        isAdmin ? <>
                             <li>
                                 <NavLink
                                     to="/dashboard/adminHome"
@@ -47,7 +49,7 @@ const Dashboard = () => {
                                     }
                                 >
                                     <h2 className="flex items-center mx-auto  text-xl gap-2"><FaBars className="text-3xl"></FaBars>
-                                       Menage Items</h2>
+                                        Menage Items</h2>
                                 </NavLink>
                             </li>
                             <li>
@@ -58,7 +60,7 @@ const Dashboard = () => {
                                     }
                                 >
                                     <h2 className="flex items-center mx-auto  text-xl gap-2"><FaBook className="text-3xl"></FaBook>
-                                       Menage Bookings</h2>
+                                        Menage Bookings</h2>
                                 </NavLink>
                             </li>
                             <li>

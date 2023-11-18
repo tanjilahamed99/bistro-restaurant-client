@@ -49,17 +49,16 @@ const AllUsers = () => {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                axiosSecure.put(`/user/${id}`)
+                axiosSecure.patch(`/user/${id}`)
                     .then(res => {
-                        // if (res.data.deletedCount > 0) {
-                        //     refetch()
-                        //     Swal.fire({
-                        //         title: "Deleted!",
-                        //         text: "User has been deleted.",
-                        //         icon: "success"
-                        //     });
-                        // }
-                        console.log(res.data)
+                        if (res.data.modifiedCount > 0) {
+                            refetch()
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "auer to admin updated.",
+                                icon: "success"
+                            });
+                        }
                     })
             }
         });
@@ -100,7 +99,7 @@ const AllUsers = () => {
                                             <span className="badge badge-ghost badge-sm">{item.email}</span>
                                         </td>
                                         <td>
-                                            <FaUsers onClick={() => handleAdmin(item._id)} className="text-xl"></FaUsers>
+                                            {item.role === 'admin' ? 'Admin' : <FaUsers onClick={() => handleAdmin(item._id)} className="text-xl"></FaUsers>}
                                         </td>
                                         <th>
                                             <button onClick={() => handleDeleteUser(item._id)} className="btn btn-ghost btn-xs">

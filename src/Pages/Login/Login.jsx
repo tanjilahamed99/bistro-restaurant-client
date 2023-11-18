@@ -1,7 +1,7 @@
 import loginImg from '../../assets/others/authentication2.png'
-import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+// import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { useForm } from "react-hook-form"
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -12,11 +12,11 @@ import UsePublicAxios from '../../Hooks/PublicAxios/UsePublicAxios';
 const Login = () => {
     const navigate = useNavigate()
     const { loginUser, googleLogin } = useContext(AuthContext)
-    const [disable, setDisable] = useState(true)
+    // const [disable, setDisable] = useState(true)
 
-    useEffect(() => {
-        loadCaptchaEnginge(6)
-    }, [])
+    // useEffect(() => {
+    //     loadCaptchaEnginge(6)
+    // }, [])
 
 
     const { register, handleSubmit } = useForm()
@@ -30,7 +30,7 @@ const Login = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
-                navigate('/')
+                // navigate('/')
             })
             .catch(error => {
                 Swal.fire({
@@ -43,17 +43,17 @@ const Login = () => {
 
     }
 
-    const validCaptcha = (e) => {
-        const user_captcha_value = e.target.value;
+    // const validCaptcha = (e) => {
+    //     const user_captcha_value = e.target.value;
 
-        if (validateCaptcha(user_captcha_value) == true) {
-            setDisable(false)
-        }
+    //     if (validateCaptcha(user_captcha_value) == true) {
+    //         setDisable(false)
+    //     }
 
-        else {
-            setDisable(true)
-        }
-    };
+    //     else {
+    //         setDisable(true)
+    //     }
+    // };
 
 
     const handleGoogleLogin = () => {
@@ -113,12 +113,15 @@ const Login = () => {
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
                             </div>
-                            <div className="form-control">
+                            {/* <div className="form-control">
                                 <LoadCanvasTemplate />
                                 <input onBlur={validCaptcha} type="text" placeholder="captcha" className="input input-bordered" required />
-                            </div>
-                            <div className="form-control mt-6">
+                            </div> */}
+                            {/* <div className="form-control mt-6">
                                 <button disabled={disable} className="btn btn-primary">Login</button>
+                            </div> */}
+                            <div className="form-control mt-6">
+                                <button className="btn btn-primary">Login</button>
                             </div>
                             <p>New here <Link className='text-bold' to={'/signUp'}>Create Account</Link></p>
                         </form>
