@@ -1,0 +1,14 @@
+* utilites
+- react
+- node js
+- express
+- mongodb
+- react rating
+- firebase
+- tans tack query
+- axios
+- react hook form
+- react icons
+- react swipper 
+- sweet alert
+- react tab
