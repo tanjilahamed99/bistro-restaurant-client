@@ -12,6 +12,7 @@ import PrivateRoute from "./PrivateRoute";
 import AdminRoutes from "./AdminRoutes";
 import AddItems from "../Pages/Dashboard/AddItems/AddItems";
 import ManageItems from "../Pages/Dashboard/ManageItems/ManageItems";
+import UpdateMenu from "../Pages/Dashboard/UpdateMenu/UpdateMenu";
 
 const Router = createBrowserRouter([
     {
@@ -59,6 +60,10 @@ const Router = createBrowserRouter([
             {
                 path: '/dashboard/menageItems',
                 element: <AdminRoutes><ManageItems></ManageItems></AdminRoutes>
+            },
+            {
+                path: '/dashboard/updateMenu/:id',
+                element: <AdminRoutes><UpdateMenu></UpdateMenu></AdminRoutes>
             },
         ]
     }

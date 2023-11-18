@@ -1,10 +1,44 @@
-import { FaTrash, FaUsers } from "react-icons/fa";
+import { FaPen, FaTrash } from "react-icons/fa";
 import SectionTittle from "../../../Components/SectionTittle/SectionTittle";
 import useMenusData from "../../../Hooks/Menus/MenusData";
+import UseAxios from "../../../Hooks/Axios/UseAxios";
+import Swal from "sweetalert2";
+import MenusTans from "../../../Hooks/MenusTans/MenusTans";
+import { Link } from "react-router-dom";
 
 const ManageItems = () => {
 
     const [, , , , , , menus] = useMenusData()
+    const axiosSecure = UseAxios()
+    const [, refetch] = MenusTans()
+
+    const handleDelete = id => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.delete(`/menu/${id}`)
+                    .then(res => {
+                        if (res.data.deletedCount > 0) {
+                            refetch()
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                        }
+                    })
+            }
+        });
+    }
+
+
 
     return (
         <div className="my-10">
@@ -48,10 +82,14 @@ const ManageItems = () => {
                                             <h2>${item?.price}</h2>
                                         </td>
                                         <td>
-                                            <FaUsers className="text-xl"></FaUsers>
+                                            <Link to={`/dashboard/updateMenu/${item._id}`}>
+                                                <button className="btn btn-ghost btn-xs">
+                                                    <FaPen className="text-xl"></FaPen>
+                                                </button>
+                                            </Link>
                                         </td>
                                         <th>
-                                            <button className="btn btn-ghost btn-xs">
+                                            <button onClick={() => handleDelete(item._id)} className="btn btn-ghost btn-xs">
                                                 <FaTrash className="text-xl"></FaTrash>
                                             </button>
                                         </th>

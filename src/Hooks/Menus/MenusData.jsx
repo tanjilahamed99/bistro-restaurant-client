@@ -1,25 +1,16 @@
-import { useEffect, useState } from "react";
-import UseAxios from "../Axios/UseAxios";
+import MenusTans from "../MenusTans/MenusTans";
 
 const useMenusData = () => {
+    const [menu] = MenusTans() || []
 
-    const axiosSecure = UseAxios()
-    const [menus, setMenus] = useState([])
 
-    useEffect(() => {
-        axiosSecure.get('/menu')
-            .then(res => {
-                setMenus(res.data)
-            })
-    }, [axiosSecure])
-
-    const offered = menus?.filter(item => item.category === 'offered')
-    const pizza = menus?.filter(item => item.category === 'pizza')
-    const dessert = menus?.filter(item => item.category === 'dessert')
-    const soup = menus?.filter(item => item.category === 'soup')
-    const salad = menus?.filter(item => item.category === 'salad')
-    const drinks = menus?.filter(item => item.category === 'drinks')
-    return [offered, pizza, salad, dessert, soup,drinks,menus]
-};
+    const offered = menu?.filter(item => item.category === 'offered')
+    const pizza = menu?.filter(item => item.category === 'pizza')
+    const dessert = menu?.filter(item => item.category === 'dessert')
+    const soup = menu?.filter(item => item.category === 'soup')
+    const salad = menu?.filter(item => item.category === 'salad')
+    const drinks = menu?.filter(item => item.category === 'drinks')
+    return [offered, pizza, salad, dessert, soup, drinks, menu]
+}
 
 export default useMenusData;
