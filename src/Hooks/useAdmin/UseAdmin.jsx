@@ -6,7 +6,7 @@ import UseAxios from "../Axios/UseAxios";
 const UseAdmin = () => {
     const axiosSecure = UseAxios()
     const { user} = useContext(AuthContext)
-    const { data:isAdmin,refetch } = useQuery({
+    const { data:isAdmin,isLoading } = useQuery({
         queryKey: [user?.email, 'isAdmin'],
         queryFn: async () => {
             const res = await axiosSecure(`dashboard/admin/${user?.email}`)
@@ -15,7 +15,7 @@ const UseAdmin = () => {
     })
 
 
-return [isAdmin,refetch] 
+return [isAdmin,isLoading] 
 
 }
 

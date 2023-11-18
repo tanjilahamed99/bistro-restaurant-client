@@ -3,23 +3,24 @@ import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { AuthContext } from '../AuthProvider/AuthProvider';
 import { Navigate } from 'react-router-dom';
+import UseAdmin from '../Hooks/useAdmin/UseAdmin';
 
-const PrivateRoute = ({ children }) => {
-
+const AdminRoutes = ({ children }) => {
     const { user, loading } = useContext(AuthContext)
-    if (loading) {
+    const [isAdmin, isLoading] = UseAdmin()
+    if (loading || isLoading) {
         return <progress className="progress w-56"></progress>
     }
-    if (user) {
+    if (user && isAdmin) {
         return children
     }
-    else {
+    else{
         return <Navigate to={'/'}></Navigate>
     }
 };
 
-PrivateRoute.propTypes = {
+AdminRoutes.propTypes = {
     children: PropTypes.node
 };
 
-export default PrivateRoute;
+export default AdminRoutes;

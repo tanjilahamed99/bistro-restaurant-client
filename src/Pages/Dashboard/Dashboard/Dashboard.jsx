@@ -6,7 +6,6 @@ import UseAdmin from "../../../Hooks/useAdmin/UseAdmin";
 const Dashboard = () => {
 
     const [isAdmin] = UseAdmin()
-    console.log(isAdmin)
 
     return (
         <div className="flex  gap-10 justify-center mx-auto container">
