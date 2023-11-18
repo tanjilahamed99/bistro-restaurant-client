@@ -19,7 +19,7 @@ const useMenusData = () => {
     const soup = menus?.filter(item => item.category === 'soup')
     const salad = menus?.filter(item => item.category === 'salad')
     const drinks = menus?.filter(item => item.category === 'drinks')
-    return [offered, pizza, salad, dessert, soup,drinks]
+    return [offered, pizza, salad, dessert, soup,drinks,menus]
 };
 
 export default useMenusData;
