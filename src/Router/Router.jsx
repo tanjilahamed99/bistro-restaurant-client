@@ -64,7 +64,8 @@ const Router = createBrowserRouter([
             {
                 path: '/dashboard/updateMenu/:id',
                 element: <AdminRoutes><UpdateMenu></UpdateMenu></AdminRoutes>,
-                loader: ({ params }) => fetch(`http://localhost:5000/menu/${params.id}`)
+                // loader: ({ params }) => fetch(`http://localhost:5000/menu/${params.id}`)
+                loader: ({ params }) => fetch(`https://bistro-server-ten.vercel.app/menu/${params.id}`)
             },
         ]
     }
